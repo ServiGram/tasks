@@ -1,0 +1,18 @@
+:root {
+  padding: 0;
+  margin: 0;
+}
+
+.text-logo {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 64px;
+  font-weight: 700;
+}
+
+.text-color-primary {
+  color: #AA5486;
+}
+
+.bg-pink {
+  background-color: #AA5486;
+}

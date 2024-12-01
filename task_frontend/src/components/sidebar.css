@@ -1,0 +1,91 @@
+/* Estilo general */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #f8f9fa;
+    width: 80px;
+    overflow: hidden;
+    transition: width 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar.expanded {
+    width: 250px;
+}
+
+.sidebar .brand {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.sidebar .brand-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.sidebar .brand-name {
+    margin-left: 15px;
+    font-size: 1.2em;
+    color: #333;
+    white-space: nowrap;
+}
+
+.menu {
+    list-style: none;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.menu-item {
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.menu-item:hover {
+    background-color: #e9ecef;
+}
+
+.icon-circle {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #dee2e6;
+    color: #495057;
+    font-size: 1.5rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.menu-item:hover .icon-circle {
+    background-color: #adb5bd;
+    transform: scale(1.1);
+}
+
+.menu-text {
+    margin-left: 15px;
+    font-size: 1em;
+    color: #495057;
+    white-space: nowrap;
+}
+
+.logout .icon-circle {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+.logout:hover .icon-circle {
+    background-color: #fa5252;
+}
+
+.iconos {
+    font-size: 48px;
+}
