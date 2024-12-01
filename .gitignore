@@ -1,0 +1,33 @@
+# Ignorar entornos virtuales
+env/
+
+# Ignorar dependencias de Node.js
+node_modules/
+
+# Ignorar archivos de configuración específicos del entorno
+*.env
+*.local
+
+# Ignorar cachés y archivos generados
+__pycache__/
+*.pyc
+*.pyo
+*.log
+db.sqlite3
+
+# Ignorar dependencias de Python
+*.egg-info/
+*.eggs/
+
+# Ignorar archivos de compilación
+dist/
+build/
+
+# Ignorar carpetas específicas de React/Vite/Angular
+task_frontend/node_modules/
+task_frontend/.cache/
+task_frontend/dist/
+
+# Ignorar configuraciones específicas del sistema operativo
+.DS_Store
+Thumbs.db
