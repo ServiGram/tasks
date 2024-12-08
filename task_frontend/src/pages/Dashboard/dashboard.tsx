@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Sidebar from '../../components/Sidebar';
 import './dashboard.css';
 import { Outlet } from 'react-router-dom';
-import Tasks from '../Tasks/tasks';
 
 const Dashboard: React.FC = () => {
     const [status, setStatus] = useState<boolean>(true);

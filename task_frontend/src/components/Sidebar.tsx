@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { DoorClosedFill, ListTask, Person } from 'react-bootstrap-icons';
 import { NavLink, useNavigate } from 'react-router-dom';
+import dataService from '../services/DataService';
 
 interface SidebarProps {
     status: boolean;
@@ -17,9 +18,16 @@ const Sidebar: React.FC<SidebarProps> = ({ status, handleMouseEnter, handleMouse
         navigate('/');
     };
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            dataService.fetchAndSetTasks(token);
+        }
+    }, []);
+
     return (
         <div className="container">
-            <section id="sidebar" /*className={!status ? 'hide' : ''}*/>
+            <section id="sidebar">
                 <a href="#" className="brand">
                     <span className="text">&nbsp; UOLA</span>
                 </a>

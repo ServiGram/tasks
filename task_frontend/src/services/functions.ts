@@ -1,6 +1,8 @@
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import api from "./api";
+import dataService from "./DataService";
+import { ITasks } from "../types/Tasks";
 
 export function progressBar(text: string): void {
     const MySwal = withReactContent(Swal);
@@ -60,3 +62,69 @@ export async function handleChangePassword(newPassword: string) {
         alert('Error al cambiar la contraseña. Inténtalo nuevamente.');
     }
 };
+
+export const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('es-ES', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+    }).format(date);
+};
+
+export async function deleteTask(taskId: number): Promise<boolean> {
+    try {
+        const token = localStorage.getItem("token");
+
+        await api.delete(`/tasks/${taskId}/`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (token) {
+            dataService.fetchAndSetTasks(token);
+        }
+        return true
+
+    } catch (error) {
+        console.error("Error al eliminar la tarea:", error);
+        return false
+    }
+}
+
+export async function editTask(taskId: number): Promise<boolean> {
+    try {
+        const token = localStorage.getItem("token");
+
+        await api.put(`/tasks/${taskId}/`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        });
+
+        if (token) {
+            dataService.fetchAndSetTasks(token);
+        }
+        return true
+
+    } catch (error) {
+        return false
+    }
+}
+
+export async function readTask(taskId: number): Promise<ITasks> {
+    try {
+        const token = localStorage.getItem("token");
+
+        const response = await api.get(`/tasks/${taskId}/`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
