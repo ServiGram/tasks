@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./task_organizer # Cambiado al directorio correcto del backend
+    container_name: django-backend
+    command: gunicorn --bind 0.0.0.0:8000 task_organizer.wsgi:application
+    volumes:
+      - ./task_organizer:/app # Volumen actualizado al directorio del backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./task_frontend
+    container_name: react-frontend
+    volumes:
+      - ./task_frontend:/app
+    ports:
+      - "3000:3000"
+    command: npm run dev
+    depends_on:
+      - backend
+
+  db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: M1P@ssw0rd!Str0ng2024
+      MYSQL_DATABASE: task_organizer_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
+
+

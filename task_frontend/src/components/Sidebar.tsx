@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { DoorClosedFill, ListTask, Person } from 'react-bootstrap-icons';
 import { NavLink, useNavigate } from 'react-router-dom';
 import dataService from '../services/DataService';
@@ -10,7 +10,7 @@ interface SidebarProps {
     toggleStatus: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ status, handleMouseEnter, handleMouseLeave, toggleStatus }) => {
+const Sidebar: React.FC<SidebarProps> = ({ handleMouseEnter, handleMouseLeave }) => {
     const navigate = useNavigate();
 
     const logOut = async () => {

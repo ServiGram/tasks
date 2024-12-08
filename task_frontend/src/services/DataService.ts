@@ -1,6 +1,6 @@
 // src/services/DataService.ts
 import { BehaviorSubject } from 'rxjs';
-import { ITaskResponse, ITasks } from '../types/Tasks';
+import { ITaskResponse } from '../types/Tasks';
 import api from './api';
 
 class DataService {

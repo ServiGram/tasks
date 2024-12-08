@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import dataService from '../../services/DataService';
 import TaskModal from '../../components/TaskModal';
 import api from '../../services/api';
-import { deleteTask, editTask, formatDate } from '../../services/functions';
+import { deleteTask, formatDate } from '../../services/functions';
 import { MRT_Localization_ES } from 'material-react-table/locales/es';
 import { Pencil, Trash } from 'react-bootstrap-icons';
 import './task.css';

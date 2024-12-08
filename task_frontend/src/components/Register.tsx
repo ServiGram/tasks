@@ -13,10 +13,10 @@ const Register: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [username, setUsername] = useState<string>('');
     const [usernameError, setUsernameError] = useState("");
-    const [emailError, setEmailError] = useState("");
+    //const [emailError, setEmailError] = useState("");
     const MySwal = withReactContent(Swal)
     const navigate = useNavigate();
-    const [registro, setRegistro] = useState<boolean>(true)
+    const [registro] = useState<boolean>(false)
 
     const handleUsernameChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const newUserName = e.target.value;
@@ -34,23 +34,22 @@ const Register: React.FC = () => {
 
             return response.data.exists;
         } catch (error) {
-            console.error("Error al verificar el username:", error);
             setUsernameError("Error al verificar el username. Por favor, intenta de nuevo.");
             return false;
         }
     };
 
-    const checkEmail = async (email: string) => {
-        try {
-            const response = await api.get('/check-username/', {
-                params: { email }
-            });
-            return response.data.exists;
-        } catch (error) {
-            console.error("Error al verificar el username:", error);
-            return false;
-        }
-    }
+    /*     const checkEmail = async (email: string) => {
+            try {
+                const response = await api.get('/check-username/', {
+                    params: { email }
+                });
+                return response.data.exists;
+            } catch (error) {
+                console.error("Error al verificar el username:", error);
+                return false;
+            }
+        } */
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -128,7 +127,7 @@ const Register: React.FC = () => {
                                 type="submit"
                                 className="color-btn-secondary w-50 mx-auto d-block"
                                 disabled={registro}>
-                                Regístrame
+                                Registrarme
                             </Button>
                         </Form>
                     </Col>

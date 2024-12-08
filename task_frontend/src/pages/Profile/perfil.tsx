@@ -70,7 +70,7 @@ const Perfil: React.FC = () => {
         formData.append('profile_picture', file);
 
         try {
-            const response = await api.put('/accounts/me/update/', formData, {
+            await api.put('/accounts/me/update/', formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data',

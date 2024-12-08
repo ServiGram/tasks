@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from datetime import timedelta
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -88,14 +89,19 @@ WSGI_APPLICATION = "task_organizer.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "task_organizer_db",
-        "USER": "root",
-        "PASSWORD": "M1P@ssw0rd!Str0ng2024",
-        "HOST": "localhost",
-        "PORT": "3306",
+        "ENGINE": config("DATABASE_ENGINE", default="django.db.backends.mysql"),
+        "NAME": config("DATABASE_NAME", default="task_organizer_db"),
+        "USER": config("DATABASE_USER", default="root"),
+        "PASSWORD": config("DATABASE_PASSWORD", default=""),
+        "HOST": config("DATABASE_HOST", default="localhost"),
+        "PORT": config("DATABASE_PORT", default="3306"),
     }
 }
+
+# Otras configuraciones
+DEBUG = config("DEBUG", default=False, cast=bool)
+SECRET_KEY = config("SECRET_KEY", default="unsafe-default-key")
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="").split(",")
 
 
 # task_organizer/settings.py
