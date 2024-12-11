@@ -4,7 +4,7 @@ export interface ITasks {
     description: string,
     priority: string,
     completed: boolean,
-    create_date: Date,
+    create_date?: Date,
     end_date: Date,
     status: string,
 }

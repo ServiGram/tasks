@@ -6,7 +6,7 @@ import { ITasks } from "../types/Tasks";
 
 export function progressBar(text: string): void {
     const MySwal = withReactContent(Swal);
-    let timerInterval: number;
+    let timerInterval: ReturnType<typeof setInterval>;
 
     MySwal.fire({
         title: text,
@@ -127,4 +127,19 @@ export async function readTask(taskId: number): Promise<ITasks> {
     } catch (error) {
         throw error;
     }
+}
+
+export function changeStatus(status: string): string {
+    let statusChange = ""
+
+    if (status === 'pending') {
+        statusChange = "Pendiente";
+    }
+    else if (status === 'in_progress') {
+        statusChange = "En Progreso";
+    }
+    else if (status === 'completed') {
+        statusChange = "Completada";
+    }
+    return statusChange
 }

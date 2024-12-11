@@ -11,7 +11,7 @@ class Task(models.Model):
         default="baja",
     )
     completed = models.BooleanField(default=False)
-    create_date = models.DateTimeField(auto_now_add=True)
+    create_date = models.DateTimeField(null=True, blank=True)
     end_date = models.DateTimeField(null=True, blank=True)
     status = models.CharField(
         max_length=50,

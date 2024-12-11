@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import dataService from '../../services/DataService';
 import TaskModal from '../../components/TaskModal';
 import api from '../../services/api';
-import { deleteTask, formatDate } from '../../services/functions';
+import { changeStatus, deleteTask, editTask, formatDate } from '../../services/functions';
 import { MRT_Localization_ES } from 'material-react-table/locales/es';
 import { Pencil, Trash } from 'react-bootstrap-icons';
 import './task.css';
@@ -19,14 +19,14 @@ const Tasks: React.FC = () => {
 
     const columns = useMemo<MRT_ColumnDef<ITasks>[]>(
         () => [
-            {
-                accessorKey: "title",
-                header: "Título",
-                muiTableHeadCellProps: { style: { color: "#AA5486" } },
-                enableHiding: false,
-                enableSorting: false,
-                enableFiltering: false,
-            },
+            /*             {
+                            accessorKey: "title",
+                            header: "Título",
+                            muiTableHeadCellProps: { style: { color: "#AA5486" } },
+                            enableHiding: false,
+                            enableSorting: false,
+                            enableFiltering: false,
+                        }, */
             {
                 accessorKey: "description",
                 header: "Descripción",
@@ -60,6 +60,7 @@ const Tasks: React.FC = () => {
                 header: "Status",
                 muiTableHeadCellProps: { style: { color: "#AA5486" } },
                 enableHiding: false,
+                Cell: ({ cell }) => changeStatus(cell.getValue<string>())
             },
             {
                 accessorKey: "actions",
@@ -126,22 +127,30 @@ const Tasks: React.FC = () => {
     }, []);
 
 
-    const handleCreateTask = async (task: ITasks) => {
+    const handleCreateTask = async (task: ITasks, taskUpdate: boolean) => {
         try {
             const token = localStorage.getItem("token");
-            await api.post(
-                "/tasks/",
-                task,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json",
-                    },
+            if (taskUpdate) {
+                const subscription: Subscription = dataService.taskId.subscribe(async (taskId) => {
+                    editTask(taskId)
+                });
+                return () => {
+                    subscription.unsubscribe();
+                };
+            } else {
+                await api.post(
+                    "/tasks/",
+                    task,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "application/json",
+                        },
+                    }
+                );
+                if (token) {
+                    await dataService.fetchAndSetTasks(token);
                 }
-            );
-
-            if (token) {
-                await dataService.fetchAndSetTasks(token);
             }
 
         } catch (error) {

@@ -1,9 +1,12 @@
 from rest_framework import serializers
 from .models import Task
-from datetime import datetime
+from django.utils.dateparse import parse_datetime
 
 
 class TaskSerializer(serializers.ModelSerializer):
+
+    status_display = serializers.SerializerMethodField()
+
     class Meta:
         model = Task
         fields = [
@@ -15,6 +18,7 @@ class TaskSerializer(serializers.ModelSerializer):
             "create_date",
             "end_date",
             "status",
+            "status_display",
             "user",
         ]
         read_only_fields = ["id", "user"]
@@ -22,19 +26,15 @@ class TaskSerializer(serializers.ModelSerializer):
     def get_status_display(self, obj):
         return obj.get_status_display()
 
-    def get_priority_display(self, obj):
-        return obj.get_priority_display()
-
     def validate_end_date(self, value):
-        # Convertir create_date a un objeto datetime
+        # Obtener create_date del input inicial
         create_date_str = self.initial_data.get("create_date")
+        # Intentar convertir create_date al formato datetime
         try:
-            create_date = (
-                datetime.fromisoformat(create_date_str) if create_date_str else None
-            )
+            create_date = parse_datetime(create_date_str) if create_date_str else None
         except ValueError:
             raise serializers.ValidationError(
-                "create_date tiene un formato inválido. Debe ser ISO 8601."
+                "create_date tiene un formato inválido. Debe ser ISO 8601. Datos iniciales: {self.initial_data}"
             )
 
         # Validar que end_date sea mayor o igual a create_date
@@ -42,4 +42,5 @@ class TaskSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "La fecha de finalización no puede ser anterior a la fecha de creación."
             )
+
         return value

@@ -20,6 +20,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media/"
 
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -28,9 +31,9 @@ MEDIA_ROOT = BASE_DIR / "media/"
 SECRET_KEY = "django-insecure-)y_vxmt@(m2m!sjm2uhdcbllf2rnqblcs*uk(p+g+cz=kazmfz"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["193.203.167.54", "localhost"]
 
 
 # Application definition
@@ -89,17 +92,18 @@ WSGI_APPLICATION = "task_organizer.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": config("DATABASE_ENGINE", default="django.db.backends.mysql"),
-        "NAME": config("DATABASE_NAME", default="task_organizer_db"),
-        "USER": config("DATABASE_USER", default="root"),
-        "PASSWORD": config("DATABASE_PASSWORD", default=""),
-        "HOST": config("DATABASE_HOST", default="localhost"),
-        "PORT": config("DATABASE_PORT", default="3306"),
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "task_organizer_db",
+        "USER": "root",
+        "PASSWORD": "M1P@ssw0rd!Str0ng2024",
+        "HOST": "db",  # Cambiar a db para subir a producción
+        "PORT": "3306",
     }
 }
 
+
 # Otras configuraciones
-DEBUG = config("DEBUG", default=False, cast=bool)
+DEBUG = config("DEBUG", default=True, cast=bool)
 SECRET_KEY = config("SECRET_KEY", default="unsafe-default-key")
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="").split(",")
 
@@ -164,14 +168,13 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = "static/"
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://193.203.167.54:8080",
+    "http://127.0.0.1:3000",
+]

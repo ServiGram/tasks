@@ -8,7 +8,7 @@ import { readTask } from "../services/functions";
 interface TaskModalProps {
     show: boolean;
     onClose: () => void;
-    onSubmit: (task: ITasks) => void;
+    onSubmit: (task: ITasks, taskUpdate: boolean) => void;
 }
 
 const TaskModal: React.FC<TaskModalProps> = ({ show, onClose, onSubmit }) => {
@@ -17,6 +17,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ show, onClose, onSubmit }) => {
     const [priority, setPriority] = useState("baja");
     const [endDate, setEndDate] = useState("");
     const [button, setTextButton] = useState("Crear")
+    const [taskUpdate, setTaskUpdate] = useState(false)
 
     const handleSubmit = () => {
         if (!title || !description || !endDate) {
@@ -27,10 +28,10 @@ const TaskModal: React.FC<TaskModalProps> = ({ show, onClose, onSubmit }) => {
         const createDate = new Date();
         const endDateObj = new Date(endDate);
 
-        if (endDateObj < createDate) {
-            alert("La fecha de finalización no puede ser anterior a la fecha de creación.");
-            return;
-        }
+        /*         if (endDateObj < createDate) {
+                    alert("La fecha de finalización no puede ser anterior a la fecha de creación.");
+                    return;
+                } */
 
         const task: ITasks = {
             title,
@@ -42,8 +43,13 @@ const TaskModal: React.FC<TaskModalProps> = ({ show, onClose, onSubmit }) => {
             status: "pending",
         };
 
-        onSubmit(task);
-        onClose();
+        if (taskUpdate) {
+            onSubmit(task, true)
+            onClose();
+        } else {
+            onSubmit(task, false);
+            onClose();
+        }
     };
 
     useEffect(() => {
@@ -52,9 +58,11 @@ const TaskModal: React.FC<TaskModalProps> = ({ show, onClose, onSubmit }) => {
                 const data = await readTask(taskId);
                 if (data) {
                     fillData(data)
+                    setTaskUpdate(true)
                 }
             } else {
                 fillCleanData();
+                setTaskUpdate(false)
             }
         });
         return () => {

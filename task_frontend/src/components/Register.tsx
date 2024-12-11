@@ -34,7 +34,7 @@ const Register: React.FC = () => {
 
             return response.data.exists;
         } catch (error) {
-            setUsernameError("Error al verificar el username. Por favor, intenta de nuevo.");
+            setUsernameError(`Error: ${error}`);
             return false;
         }
     };

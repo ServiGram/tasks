@@ -1,13 +1,12 @@
-version: "3.8"
-
 services:
   backend:
     build:
-      context: ./task_organizer # Cambiado al directorio correcto del backend
+      context: ./task_organizer
     container_name: django-backend
     command: gunicorn --bind 0.0.0.0:8000 task_organizer.wsgi:application
     volumes:
-      - ./task_organizer:/app # Volumen actualizado al directorio del backend
+      - media_data:/app/media
+      - static_data:/app/static
     ports:
       - "8000:8000"
     env_file:
@@ -20,10 +19,23 @@ services:
       context: ./task_frontend
     container_name: react-frontend
     volumes:
-      - ./task_frontend:/app
+      - ./task_frontend:/app/dist
     ports:
       - "3000:3000"
     command: npm run dev
+    depends_on:
+      - backend
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-server
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./frontend/dist:/app/dist
+      - media_data:/media
+      - static_data:/static
     depends_on:
       - backend
 
@@ -33,6 +45,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: M1P@ssw0rd!Str0ng2024
       MYSQL_DATABASE: task_organizer_db
+      TZ: America/Bogota
+      MYSQL_TIME_ZONE: +00:00
     ports:
       - "3306:3306"
     volumes:
@@ -40,5 +54,7 @@ services:
 
 volumes:
   db_data:
+  media_data:
+  static_data:
 
 
