@@ -108,7 +108,6 @@ DEBUG = config("DEBUG", default=True, cast=bool)
 SECRET_KEY = config("SECRET_KEY", default="unsafe-default-key")
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="").split(",")
 
-
 # task_organizer/settings.py
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
