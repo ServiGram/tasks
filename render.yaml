@@ -1,0 +1,35 @@
+services:
+  - name: backend
+    type: web_service
+    env: docker
+    dockerfilePath: ./task_organizer/Dockerfile
+    envVars:
+      - key: DB_NAME
+        value: task_organizer_db
+      - key: DB_USER
+        value: root
+      - key: DB_PASSWORD
+        value: M1P@ssw0rd!Str0ng2024
+      - key: DB_HOST
+        value: db
+      - key: DB_PORT
+        value: "3306"
+    plan: free # Cambiar a 'starter' o superior si necesitas más recursos
+
+  - name: frontend
+    type: web_service
+    env: docker
+    dockerfilePath: ./task_frontend/Dockerfile
+    envVars:
+      - key: VITE_API_URL
+        value: https://backend.onrender.com/api
+    plan: free
+
+  - name: db
+    type: database
+    databaseType: mysql
+    plan: free
+    properties:
+      name: task_organizer_db
+      user: root
+      password: M1P@ssw0rd!Str0ng2024
