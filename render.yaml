@@ -1,6 +1,6 @@
 services:
   - name: backend
-    type: service
+    type: web
     env: docker
     dockerfilePath: ./task_organizer/Dockerfile
     envVars:
@@ -14,11 +14,11 @@ services:
         value: db
       - key: DB_PORT
         value: "3306"
-    plan: free # Cambiar a 'starter' o superior si necesitas más recursos
+    plan: free
     healthCheckPath: /
 
   - name: frontend
-    type: service
+    type: web
     env: docker
     dockerfilePath: ./task_frontend/Dockerfile
     envVars:
@@ -35,4 +35,3 @@ services:
       name: task_organizer_db
       user: root
       password: M1P@ssw0rd!Str0ng2024
-
