@@ -1,8 +1,9 @@
+version: '3.8'
+
 services:
   backend:
     build:
       context: ./task_organizer
-    container_name: django-backend
     command: gunicorn --bind 0.0.0.0:8000 task_organizer.wsgi:application
     volumes:
       - media_data:/app/media
@@ -17,31 +18,16 @@ services:
   frontend:
     build:
       context: ./task_frontend
-    container_name: react-frontend
+    command: npm run build
     volumes:
-      - ./task_frontend:/app/dist
+      - ./task_frontend/build:/app/build
     ports:
       - "3000:3000"
-    command: npm run dev
-    depends_on:
-      - backend
-
-  nginx:
-    image: nginx:latest
-    container_name: nginx-server
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx:/etc/nginx/conf.d
-      - ./frontend/dist:/app/dist
-      - media_data:/media
-      - static_data:/static
     depends_on:
       - backend
 
   db:
     image: mysql:8.0
-    container_name: mysql-db
     environment:
       MYSQL_ROOT_PASSWORD: M1P@ssw0rd!Str0ng2024
       MYSQL_DATABASE: task_organizer_db
@@ -56,5 +42,3 @@ volumes:
   db_data:
   media_data:
   static_data:
-
-
