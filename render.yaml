@@ -1,6 +1,6 @@
 services:
   - name: backend
-    type: web_service
+    type: service
     env: docker
     dockerfilePath: ./task_organizer/Dockerfile
     envVars:
@@ -15,15 +15,17 @@ services:
       - key: DB_PORT
         value: "3306"
     plan: free # Cambiar a 'starter' o superior si necesitas más recursos
+    healthCheckPath: /
 
   - name: frontend
-    type: web_service
+    type: service
     env: docker
     dockerfilePath: ./task_frontend/Dockerfile
     envVars:
       - key: VITE_API_URL
         value: https://backend.onrender.com/api
     plan: free
+    healthCheckPath: /
 
   - name: db
     type: database
@@ -33,3 +35,4 @@ services:
       name: task_organizer_db
       user: root
       password: M1P@ssw0rd!Str0ng2024
+
