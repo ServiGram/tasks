@@ -96,6 +96,9 @@ DATABASES = {
         "PASSWORD": config("DATABASE_PASSWORD", default="$xnG%^;;fS;Eav.v"),
         "HOST": config("DATABASE_HOST", default="104.197.160.161"),
         "PORT": config("DATABASE_PORT", default="3306"),
+        "OPTIONS": {
+            "auth_plugin": "caching_sha2_password",
+        },
     }
 }
 
@@ -103,9 +106,7 @@ DATABASES = {
 # Otras configuraciones
 DEBUG = config("DEBUG", default=True, cast=bool)
 SECRET_KEY = config("SECRET_KEY", default="unsafe-default-key")
-ALLOWED_HOSTS = [
-    host.strip() for host in config("ALLOWED_HOSTS", default="").split(",") if host
-]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "tasks-backend-1"]
 
 # task_organizer/settings.py
 REST_FRAMEWORK = {
@@ -171,8 +172,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-CORS_ALLOWED_ORIGINS = [
-    origin.strip()
-    for origin in config("CORS_ALLOWED_ORIGINS", "").split(",")
-    if origin.strip()
+CORS_ALLOW_ALL_ORIGINS = True
+""" CORS_ALLOWED_ORIGINS = [
+    "https://localhost:3000",
+    "https://127.0.0.1:3000",
+    "https://tasks-56qx.onrender.com",
+    "https://tasks-frontend-6y3m.onrender.com",
 ]
+ """

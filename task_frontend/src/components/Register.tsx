@@ -21,6 +21,7 @@ const Register: React.FC = () => {
     const handleUsernameChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const newUserName = e.target.value;
         setUsername(newUserName)
+        console.log("Nuevo username:", username);
         try {
             const response = await api.get('/accounts/check-username/', {
                 params: { username: newUserName },
