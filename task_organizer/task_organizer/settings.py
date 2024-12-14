@@ -106,7 +106,7 @@ DATABASES = {
 # Otras configuraciones
 DEBUG = config("DEBUG", default=True, cast=bool)
 SECRET_KEY = config("SECRET_KEY", default="unsafe-default-key")
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "tasks-backend-1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "tasks-backend-1", "backend"]
 
 # task_organizer/settings.py
 REST_FRAMEWORK = {
@@ -173,10 +173,10 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOW_ALL_ORIGINS = True
-""" CORS_ALLOWED_ORIGINS = [
+CORS_ALLOWED_ORIGINS = [
     "https://localhost:3000",
     "https://127.0.0.1:3000",
     "https://tasks-56qx.onrender.com",
     "https://tasks-frontend-6y3m.onrender.com",
+    "http://frontend",
 ]
- """

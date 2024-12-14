@@ -1,31 +1,32 @@
 version: '3.8'
-services:
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    networks:
-      - app-network
-    depends_on:
-      - backend
 
+services:
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
-    environment:
-      - DATABASE_ENGINE=${DATABASE_ENGINE}
-      - DATABASE_NAME=${DATABASE_NAME}
-      - DATABASE_USER=${DATABASE_USER}
-      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-      - DATABASE_HOST=${DATABASE_HOST}
-      - DATABASE_PORT=${DATABASE_PORT}
+      context: ./task_organizer
+    container_name: backend
     ports:
       - "8000:8000"
+    environment:
+      - DATABASE_ENGINE=django.db.backends.mysql
+      - DATABASE_NAME=task-organizer-db
+      - DATABASE_USER=uolsauser
+      - DATABASE_PASSWORD=$xnG%^;;fS;Eav.v
+      - DATABASE_HOST=104.197.160.161
+      - DATABASE_PORT=3306
     networks:
       - app-network
+
+  frontend:
+    build:
+      context: ./task_frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
 
 networks:
   app-network:

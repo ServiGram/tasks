@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "lodash": "^4.17.21",
     "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.13"
   }
 }

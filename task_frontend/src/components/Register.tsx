@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { progressBar } from '../services/functions.ts';
 import withReactContent from 'sweetalert2-react-content';
+import { debounce } from 'lodash';
 import Swal from 'sweetalert2';
 
 const Register: React.FC = () => {
@@ -18,10 +19,7 @@ const Register: React.FC = () => {
     const navigate = useNavigate();
     const [registro] = useState<boolean>(false)
 
-    const handleUsernameChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newUserName = e.target.value;
-        setUsername(newUserName)
-        console.log("Nuevo username:", username);
+    const debouncedCheckUsername = debounce(async (newUserName: string) => {
         try {
             const response = await api.get('/accounts/check-username/', {
                 params: { username: newUserName },
@@ -32,12 +30,15 @@ const Register: React.FC = () => {
             } else {
                 setUsernameError("");
             }
-
-            return response.data.exists;
         } catch (error) {
             setUsernameError(`Error: ${error}`);
-            return false;
         }
+    }, 1000);
+
+    const handleUsernameChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newUserName = e.target.value;
+        setUsername(newUserName);
+        debouncedCheckUsername(newUserName);
     };
 
     /*     const checkEmail = async (email: string) => {
