@@ -18,9 +18,9 @@ services:
   frontend:
     build:
       context: ./task_frontend
-    command: npm run build
+    command: npm run dev -- --host
     volumes:
-      - ./task_frontend/build:/app/build
+      - ./task_frontend/:/app
     ports:
       - "3000:3000"
     depends_on:
@@ -30,7 +30,7 @@ services:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: M1P@ssw0rd!Str0ng2024
-      MYSQL_DATABASE: task_organizer_db
+      MYSQL_DATABASE: task-organizer-db
       TZ: America/Bogota
       MYSQL_TIME_ZONE: +00:00
     ports:

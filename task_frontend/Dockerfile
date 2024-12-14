@@ -11,13 +11,13 @@ COPY package.json package-lock.json ./
 RUN npm install
 
 # Copiar el resto del código del frontend
-COPY . .
+COPY package*.json .
 
 # Crear la aplicación para producción
-RUN npm run build
+RUN npm run dev
 
 # Exponer el puerto
 EXPOSE 3000
 
 # Servir la aplicación estática
-CMD ["npx", "serve", "-s", "dist", "-l", "3000"]
+CMD ["npm", "run", "dev", "--", "--host"]

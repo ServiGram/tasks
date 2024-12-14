@@ -34,9 +34,6 @@ SECRET_KEY = "django-insecure-)y_vxmt@(m2m!sjm2uhdcbllf2rnqblcs*uk(p+g+cz=kazmfz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["193.203.167.54", "localhost"]
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -106,7 +103,9 @@ DATABASES = {
 # Otras configuraciones
 DEBUG = config("DEBUG", default=True, cast=bool)
 SECRET_KEY = config("SECRET_KEY", default="unsafe-default-key")
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="").split(",")
+ALLOWED_HOSTS = [
+    host.strip() for host in config("ALLOWED_HOSTS", default="").split(",") if host
+]
 
 # task_organizer/settings.py
 REST_FRAMEWORK = {
@@ -172,11 +171,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://193.203.167.54:8080",
-    "http://127.0.0.1:3000",
-    "tasks-56qx.onrender.com",
-    "tasks-56qx.onrender.com,tasks-frontend-6y3m.onrender.com",
+    origin.strip()
+    for origin in config("CORS_ALLOWED_ORIGINS", "").split(",")
+    if origin.strip()
 ]
