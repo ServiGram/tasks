@@ -1,44 +1,25 @@
 version: '3.8'
-
 services:
-  backend:
-    build:
-      context: ./task_organizer
-    command: gunicorn --bind 0.0.0.0:8000 task_organizer.wsgi:application
-    volumes:
-      - media_data:/app/media
-      - static_data:/app/static
-    ports:
-      - "8000:8000"
-    env_file:
-      - .env
-    depends_on:
-      - db
-
   frontend:
     build:
-      context: ./task_frontend
-    command: npm run dev -- --host
-    volumes:
-      - ./task_frontend/:/app
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    networks:
+      - app-network
     depends_on:
       - backend
 
-  db:
-    image: mysql:8.0
-    environment:
-      MYSQL_ROOT_PASSWORD: M1P@ssw0rd!Str0ng2024
-      MYSQL_DATABASE: task-organizer-db
-      TZ: America/Bogota
-      MYSQL_TIME_ZONE: +00:00
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
-      - "3306:3306"
-    volumes:
-      - db_data:/var/lib/mysql
+      - "8000:8000"
+    networks:
+      - app-network
 
-volumes:
-  db_data:
-  media_data:
-  static_data:
+networks:
+  app-network:
+    driver: bridge
