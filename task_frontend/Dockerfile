@@ -20,4 +20,4 @@ RUN npm run build
 EXPOSE 3000
 
 # Servir la aplicación estática
-CMD ["npm", "run", "dev", "--", "--host"]
+CMD ["npm", "run", "build", "--", "--host"]
