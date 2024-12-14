@@ -90,11 +90,11 @@ WSGI_APPLICATION = "task_organizer.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": config("DATABASE_ENGINE"),
-        "NAME": config("DATABASE_NAME"),
-        "USER": config("DATABASE_USER"),
-        "PASSWORD": config("DATABASE_PASSWORD"),
-        "HOST": config("DATABASE_HOST"),
+        "ENGINE": config("DATABASE_ENGINE", default="django.db.backends.mysql"),
+        "NAME": config("DATABASE_NAME", default="task-organizer-db"),
+        "USER": config("DATABASE_USER", default="uolsauser"),
+        "PASSWORD": config("DATABASE_PASSWORD", default="$xnG%^;;fS;Eav.v"),
+        "HOST": config("DATABASE_HOST", default="104.197.160.161"),
         "PORT": config("DATABASE_PORT", default="3306"),
     }
 }
