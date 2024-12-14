@@ -14,7 +14,7 @@ RUN npm install
 COPY package*.json .
 
 # Crear la aplicación para producción
-RUN npm run dev
+RUN npm run build
 
 # Exponer el puerto
 EXPOSE 3000
